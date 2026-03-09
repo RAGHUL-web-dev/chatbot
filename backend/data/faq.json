@@ -1,0 +1,528 @@
+[
+  {
+    "keywords": [
+      "location",
+      "where",
+      "address",
+      "city",
+      "situated",
+      "map",
+      "directions"
+    ],
+    "answer": "Loyola College is located at Sterling Road, Nungambakkam, Chennai, Tamil Nadu 600034, India. It's centrally located and easily accessible by public transport including the Nungambakkam Railway Station."
+  },
+  {
+    "keywords": [
+      "admission",
+      "apply",
+      "application",
+      "join",
+      "process",
+      "enroll",
+      "procedure",
+      "how to"
+    ],
+    "answer": "Admissions at Loyola College are generally merit-based for UG courses (based on your 12th standard marks). The application process is completely online through our official portal. PG admissions require a bachelor's degree and often involve an entrance test or personal interview depending on the department."
+  },
+  {
+    "keywords": [
+      "fee",
+      "fees",
+      "cost",
+      "financial aid",
+      "tuition",
+      "how much",
+      "structure"
+    ],
+    "answer": "Fees vary by course and Shift (Aided vs Self-Financing). Shift 1 (Aided) undergraduate courses range from approximately ₹79,000 to ₹1,23,000 for the entire 3-year duration, while Shift 2 (Self-Financing) can range up to ₹5 Lakhs for specialized courses. Please check the specific program page for exact semester-wise breakdowns."
+  },
+  {
+    "keywords": [
+      "courses",
+      "programs",
+      "majors",
+      "degrees",
+      "subjects",
+      "offerings",
+      "ug",
+      "pg"
+    ],
+    "answer": "Loyola offers a wide array of UG, PG, and Doctoral programs across Arts (English, Economics, History, Sociology), Sciences (Physics, Chemistry, Math, Computer Science, Data Science, Biotech), and Commerce/Management (B.Com, BBA). Vocational degrees like 3D Animation and Digital Journalism are also available."
+  },
+  {
+    "keywords": [
+      "scholarship",
+      "scholarships",
+      "concession",
+      "financial support",
+      "poor",
+      "waiver",
+      "jesuit"
+    ],
+    "answer": "Yes, Loyola College provides substantial financial aid through the Loyola Students Support Services (LSSS). We offer Government Scholarships (SC/ST/Minority), management fee concessions, merit-based scholarships, sports scholarships, and the Jesuit Education Support (JES) for those who qualify."
+  },
+  {
+    "keywords": [
+      "events",
+      "fest",
+      "symposium",
+      "cultural",
+      "conference",
+      "extracurricular",
+      "competition"
+    ],
+    "answer": "The college hosts numerous vibrant events year-round, including NIAC, Innodhya (National Entrepreneurship Summit), Eminence (Inter-Collegiate Fest), and Zenith (Management Festival). Departments also host their own cultural and technical symposiums."
+  },
+  {
+    "keywords": [
+      "contact",
+      "phone",
+      "email",
+      "support",
+      "reach",
+      "number",
+      "helpline"
+    ],
+    "answer": "You can reach the admission office through the official portal at loyolacollege.edu. For general inquiries, call our main reception at 044-28178200 or email admission@loyolacollege.edu."
+  },
+  {
+    "keywords": [
+      "hostel",
+      "accommodation",
+      "stay",
+      "room",
+      "mess",
+      "boarding",
+      "residence"
+    ],
+    "answer": "Yes, Loyola College offers excellent hostel facilities with a capacity for hundreds of students. It includes well-furnished rooms, a hygienic mess, recreational rooms, and round-the-clock security. Hostel admissions are separate from college admissions."
+  },
+  {
+    "keywords": [
+      "placement",
+      "jobs",
+      "recruiters",
+      "salary",
+      "career",
+      "hiring",
+      "interviews",
+      "companies"
+    ],
+    "answer": "The Loyola Placement Cell offers excellent career opportunities. Top recruiters include Deloitte, EY, TCS, Wipro, Infosys, Zoho, and various top banks. Median salary packages usually range closely around ₹4 LPA to ₹6 LPA depending on the course and student performance."
+  },
+  {
+    "keywords": [
+      "ranking",
+      "reputation",
+      "nirf",
+      "naac",
+      "accreditation",
+      "best",
+      "review"
+    ],
+    "answer": "Loyola College consistently ranks among the top 10 Arts and Science colleges in India. It is autonomous, affiliated with the University of Madras, and holds an ‘A++’ grade accreditation by NAAC."
+  },
+  {
+    "keywords": [
+      "shift 1",
+      "shift 2",
+      "shifts",
+      "morning",
+      "evening",
+      "aided",
+      "self-financing"
+    ],
+    "answer": "Loyola uniquely operates in two shifts. Shift 1 (Aided courses) generally runs from morning till early afternoon (8:15 AM to 1:15 PM). Shift 2 (Self-Financing courses) runs in the afternoon (1:30 PM to 6:30 PM)."
+  },
+  {
+    "keywords": [
+      "uniform",
+      "dress code",
+      "wear",
+      "attire",
+      "clothes"
+    ],
+    "answer": "There is no strict uniform, but the college heavily enforces a modest and decent dress code. Specifically, round-neck t-shirts, sleeveless clothing, ripped jeans, and shorts are not permitted on campus."
+  },
+  {
+    "keywords": [
+      "timing",
+      "hours",
+      "schedule",
+      "open",
+      "close",
+      "timings"
+    ],
+    "answer": "The college operates in two shifts. Shift 1 runs from 8:15 AM to 1:15 PM. Shift 2 runs from 1:30 PM to 6:30 PM. Administrative offices are generally open from 9 AM to 4 PM on weekdays."
+  },
+  {
+    "keywords": [
+      "library",
+      "books",
+      "reading",
+      "study",
+      "reference"
+    ],
+    "answer": "The Loyola Library is one of the largest and oldest college libraries in the region, featuring thousands of physical books, digital archives, journals, and dedicated reading halls specifically designed for quiet study and research."
+  },
+  {
+    "keywords": [
+      "sports",
+      "athletics",
+      "cricket",
+      "football",
+      "gym",
+      "basketball",
+      "tennis"
+    ],
+    "answer": "Loyola is renowned for its sports achievements. The campus features an enormous multi-purpose ground for cricket and football, tennis courts, basketball courts, and an indoor stadium."
+  },
+  {
+    "keywords": [
+      "lovat",
+      "visual aptitude test",
+      "media test",
+      "entrance",
+      "viscom"
+    ],
+    "answer": "LoVAT (Loyola Visual Aptitude Test) is a mandatory entrance exam for students applying to courses like B.Sc. Visual Communication, B.Voc. 3D Animation, and Multimedia. It tests creativity, drawing skills, and media awareness."
+  },
+  {
+    "keywords": [
+      "attendance",
+      "absence",
+      "leave",
+      "requirements",
+      "minimum",
+      "strict"
+    ],
+    "answer": "Attendance is strictly monitored. Students are required to maintain a minimum of 80% attendance in each semester to be eligible to appear for the final semester examinations."
+  },
+  {
+    "keywords": [
+      "transport",
+      "bus",
+      "train",
+      "commute",
+      "travel"
+    ],
+    "answer": "The college does not provide its own transport buses because it is ideally located in Nungambakkam. It's just a 5-minute walk from Nungambakkam Railway Station, and there are many MTC bus stops right outside the campus gates."
+  },
+  {
+    "keywords": [
+      "canteen",
+      "food",
+      "cafeteria",
+      "lunch",
+      "snacks",
+      "eat"
+    ],
+    "answer": "The campus houses multiple large canteens and food kiosks serving a variety of affordable, hygienic South Indian meals, snacks, fresh juices, and baked goods."
+  },
+  {
+    "keywords": [
+      "alumni",
+      "network",
+      "past students",
+      "graduates",
+      "famous"
+    ],
+    "answer": "Loyola boasts an incredibly strong alumni network spanning across globe, including notable politicians, actors (like Vijay and Suriya), business leaders, and civil servants. The Alumni Association actively helps with mentoring and scholarships."
+  },
+  {
+    "keywords": [
+      "b.com",
+      "bcom",
+      "commerce",
+      "accounts",
+      "finance",
+      "business"
+    ],
+    "answer": "B.Com is one of the most sought-after degrees at Loyola. We offer General B.Com, Corporate Secretaryship, Accounting & Finance, and Computer Applications. The cut-off for B.Com is typically very high due to strong demand."
+  },
+  {
+    "keywords": [
+      "bba",
+      "management",
+      "business administration"
+    ],
+    "answer": "The BBA program emphasizes entrepreneurship and modern business management, incorporating case studies, internships, and corporate interactions. It is primarily offered in Shift 2."
+  },
+  {
+    "keywords": [
+      "computer science",
+      "bsc cs",
+      "bca",
+      "programming",
+      "software",
+      "it"
+    ],
+    "answer": "We offer top-tier IT programs including B.Sc. Computer Science and BCA (Bachelor of Computer Applications), focusing extensively on modern programming languages, software engineering, and lab sessions."
+  },
+  {
+    "keywords": [
+      "data science",
+      "m.sc data science",
+      "analytics",
+      "statistics",
+      "machine learning"
+    ],
+    "answer": "Yes, Loyola offers an advanced M.Sc. in Data Science program designed to equip students with highly relevant skills in statistics, big data analytics, and machine learning algorithms."
+  },
+  {
+    "keywords": [
+      "arts",
+      "ba",
+      "b.a.",
+      "english",
+      "economics",
+      "history"
+    ],
+    "answer": "Loyola is heavily renowned for its Humanities department, offering prestigious Bachelor of Arts degrees in Economics, English Literature, History, and Sociology."
+  },
+  {
+    "keywords": [
+      "phd",
+      "doctorate",
+      "research",
+      "fellowship"
+    ],
+    "answer": "Loyola acts as a premier research hub. PhD programs are available across almost all major departments (Science, Arts, Commerce). Admission involves a written test and a rigorous interview panel."
+  },
+  {
+    "keywords": [
+      "syllabus",
+      "curriculum",
+      "autonomous",
+      "subjects"
+    ],
+    "answer": "Being an autonomous college, Loyola updates its syllabus frequently to match industry standards, offering CBCS (Choice Based Credit System) where students can pick elective subjects across various departments."
+  },
+  {
+    "keywords": [
+      "clubs",
+      "associations",
+      "societies",
+      "groups",
+      "student life"
+    ],
+    "answer": "Student life is highly active with over 30+ clubs including the Debating Society, Quiz Club, Rotaract, NCC (Army, Navy, Air Wing), NSS, Enviro Club, and AiCuf."
+  },
+  {
+    "keywords": [
+      "ncc",
+      "nss",
+      "social service",
+      "army",
+      "navy",
+      "rotaract"
+    ],
+    "answer": "Loyola strongly encourages social responsibility. Students can join NCC (Army, Navy, Air Wing), NSS, Rotaract, or Outreach programs. Outreach involves mandatory field trips in the second year to assist rural communities."
+  },
+  {
+    "keywords": [
+      "exam",
+      "examinations",
+      "results",
+      "cia",
+      "semester",
+      "internal",
+      "external"
+    ],
+    "answer": "Exams are split into CIA (Continuous Internal Assessment) taking place mid-semester and External Semester Exams at the end. Results are published promptly online through the student portal."
+  },
+  {
+    "keywords": [
+      "foreign",
+      "international",
+      "nri",
+      "overseas",
+      "students"
+    ],
+    "answer": "International and NRI students are wholeheartedly welcome. There is a dedicated international student desk to assist with visa procedures, special English courses if required, and hostel arrangements."
+  },
+  {
+    "keywords": [
+      "language",
+      "tamil",
+      "french",
+      "hindi",
+      "part 1"
+    ],
+    "answer": "For Part 1 Language in UG degrees, students can choose between Tamil, Hindi, or French. Basic knowledge of the chosen language from school level is generally expected."
+  },
+  {
+    "keywords": [
+      "cutoff",
+      "cut-off",
+      "marks required",
+      "percentage",
+      "eligibility"
+    ],
+    "answer": "Cutoffs vary dramatically every year depending on board results and applicant volume. Courses like B.Com and B.Sc Computer Science typically demand very high marks (often 90%+), whereas Arts courses might be slightly lower."
+  },
+  {
+    "keywords": [
+      "women",
+      "girls",
+      "co-ed",
+      "coeducation",
+      "gender"
+    ],
+    "answer": "Loyola College is co-educational for all Postgraduate programs and French literature UG programs. However, most Undergraduate programs in Shift 1 are exclusively for male students, while Shift 2 contains several co-ed undergraduate courses (like B.Sc. Viscom)."
+  },
+  {
+    "keywords": [
+      "bank",
+      "atm",
+      "facilities on campus",
+      "post office"
+    ],
+    "answer": "The campus is self-sufficient with an Indian Overseas Bank (IOB) branch inside, multiple ATMs, a post office, stationary stores, and a medical dispensary."
+  },
+  {
+    "keywords": [
+      "church",
+      "chapel",
+      "prayer",
+      "catholic",
+      "religion",
+      "mass"
+    ],
+    "answer": "As a prestigious Jesuit institution, there is a beautiful, serene Chapel located centrally on campus. Regular mass is conducted, and students of all faiths are welcome to use the space for silent devotion."
+  },
+  {
+    "keywords": [
+      "ragging",
+      "bullying",
+      "harassment",
+      "safety",
+      "anti-ragging"
+    ],
+    "answer": "Loyola College has a rigid ZERO TOLERANCE policy towards ragging. There is an active Anti-Ragging Committee on campus; any student found guilty of ragging faces immediate expulsion."
+  },
+  {
+    "keywords": [
+      "wifi",
+      "internet",
+      "network",
+      "connectivity"
+    ],
+    "answer": "Free secure Wi-Fi is available across specific academic zones and the library for educational purposes. Students are provided with individual login credentials upon joining."
+  },
+  {
+    "keywords": [
+      "photography",
+      "viscom",
+      "multimedia",
+      "film",
+      "animation"
+    ],
+    "answer": "The Department of Visual Communication (VisCom) is considered one of the best in India, boasting state-of-the-art photography studios, editing suites, and animation labs. It has produced numerous prominent Indian film directors."
+  },
+  {
+    "keywords": [
+      "internship",
+      "project work",
+      "internships",
+      "practical",
+      "industry"
+    ],
+    "answer": "Internships are a mandatory component of the curriculum for most PG and vocational UG programs. The placement cell assists students in securing internships in reputable firms during their final semesters."
+  },
+  {
+    "keywords": [
+      "gym",
+      "fitness",
+      "workout",
+      "health"
+    ],
+    "answer": "A well-equipped modern gymnasium is available on campus for students. It prioritizes student athletes but is accessible to others based on timing slots and trainer guidance."
+  },
+  {
+    "keywords": [
+      "parking",
+      "bike",
+      "car",
+      "vehicle",
+      "two wheeler"
+    ],
+    "answer": "Due to space constraints and environmental policies, student parking inside the campus is highly restricted. However, limited two-wheeler parking is available on a first-come, first-served basis."
+  },
+  {
+    "keywords": [
+      "medical",
+      "doctor",
+      "health center",
+      "emergency",
+      "sick"
+    ],
+    "answer": "A Health Centre is located on campus with a resident doctor and nurse available during working hours to handle any medical emergencies, first aid, and minor illnesses."
+  },
+  {
+    "keywords": [
+      "pwd",
+      "disabled",
+      "accessible",
+      "wheelchair"
+    ],
+    "answer": "The campus is striving towards total inclusivity. Elevators, ramps, accessible restrooms, and scribes for examinations are provided for Students with Disabilities (PwD)."
+  },
+  {
+    "keywords": [
+      "exchange programs",
+      "study abroad",
+      "foreign universities",
+      "mou"
+    ],
+    "answer": "Loyola has signed MOUs with numerous esteemed foreign universities. Outstanding students occasionally get opportunities for short-term cultural or academic exchange programs through the respective designated departments."
+  },
+  {
+    "keywords": [
+      "medium of instruction",
+      "language of teaching",
+      "english"
+    ],
+    "answer": "For all major UG and PG programs, the medium of instruction, examination, and coursework is strictly English. "
+  },
+  {
+    "keywords": [
+      "refund",
+      "cancellation",
+      "withdraw",
+      "fee return"
+    ],
+    "answer": "If a student cancels their admission within the stipulated timeframe set by the UGC guidelines, a refund of fees (minus a processing charge) is issued. Refer to the admission booklet for exact dates."
+  },
+  {
+    "keywords": [
+      "history",
+      "founded",
+      "established",
+      "old",
+      "jesuits"
+    ],
+    "answer": "Loyola College was founded in 1925 by the Society of Jesus (Jesuits) with the primary objective of providing university education in a Christian atmosphere for deserving students."
+  },
+  {
+    "keywords": [
+      "principal",
+      "director",
+      "management",
+      "rector",
+      "father"
+    ],
+    "answer": "The college management consists of the Rector, Secretary, and Principal, who are Jesuit Fathers. They lead the institution to foster its educational goals and maintain strict discipline and values."
+  },
+  {
+    "keywords": [
+      "celebrities",
+      "vijay",
+      "suriya",
+      "anirudh",
+      "vikram",
+      "actors"
+    ],
+    "answer": "Loyola Viscom and other departments have a proud history of producing some of Tamil cinema's biggest names, including actors Vijay, Suriya, Vikram, and music director Anirudh Ravichander."
+  }
+]
