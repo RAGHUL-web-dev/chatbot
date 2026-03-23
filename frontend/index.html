@@ -3,134 +3,449 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College Chatbot</title>
+    <title>Loyola College · 2026 | Interactive Chat Assistant</title>
+    <!-- Tailwind + Font Awesome + Inter -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
     <style>
-        /* Custom scrollbar for chat */
-        .chat-scroll::-webkit-scrollbar {
-            width: 6px;
+        * { font-family: 'Inter', system-ui, sans-serif; scroll-behavior: smooth; }
+        .glass-header { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.5); }
+        .hover-card { transition: all 0.25s ease; border: 1px solid rgba(0,0,0,0.02); background: white; }
+        .hover-card:hover { transform: translateY(-6px); box-shadow: 0 25px 30px -12px rgba(0, 50, 100, 0.25); border-color: #cbd5e1; }
+        /* Floating chat button + collapsible panel */
+        .chat-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s;
         }
-        .chat-scroll::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-            border-radius: 4px;
+        .chat-fab:hover { transform: scale(1.05); box-shadow: 0 12px 28px rgba(0,0,0,0.25); }
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 360px;
+            max-width: calc(100vw - 32px);
+            height: 520px;
+            max-height: 70vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(16px);
+            border-radius: 1.75rem;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 999;
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
         }
-        .chat-scroll::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
+        .chat-window.open {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
         }
-        .chat-scroll::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
+        .chat-scroll::-webkit-scrollbar { width: 5px; }
+        .chat-scroll::-webkit-scrollbar-track { background: #eef2ff; border-radius: 10px; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+        .message-bubble-user {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            border-radius: 1.5rem 1.5rem 0.25rem 1.5rem;
+            padding: 0.6rem 1rem;
+            max-width: 85%;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
         }
-        
-        .typing-indicator span {
-            display: inline-block;
+        .message-bubble-bot {
+            background: #f1f5f9;
+            color: #0f172a;
+            border-radius: 1.5rem 1.5rem 1.5rem 0.25rem;
+            padding: 0.6rem 1rem;
+            max-width: 85%;
+            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+        }
+        .typing-dots span {
             width: 6px;
             height: 6px;
-            background-color: #6b7280;
+            background-color: #94a3b8;
             border-radius: 50%;
-            margin: 0 2px;
-            animation: bounce 1.4s infinite ease-in-out both;
+            display: inline-block;
+            animation: pulseDot 1.2s infinite ease-in-out;
         }
-
-        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes pulseDot {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-4px); opacity: 1; }
+        }
+        .predefined-chip {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 40px;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #1e293b;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .predefined-chip:hover { background: #2563eb; color: white; border-color: #2563eb; }
+        .nav-link.active {
+            border-bottom: 3px solid #fbbf24;
+            padding-bottom: 4px;
+            font-weight: 600;
+            color: #1e3a8a !important;
+        }
+        section { scroll-margin-top: 90px; }
+        @media (max-width: 640px) {
+            .chat-window { width: 320px; right: 12px; bottom: 85px; height: 480px; }
+            .chat-fab { width: 52px; height: 52px; bottom: 18px; right: 18px; }
         }
     </style>
 </head>
-<body class="bg-gray-50 flex flex-col min-h-screen font-sans text-gray-800">
+<body class="bg-gray-50 text-gray-800 antialiased">
 
-    <!-- Header -->
-    <header class="bg-blue-600 text-white shadow-md">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold flex items-center gap-2">
-                <i class="fa-solid fa-graduation-cap"></i> University Portal
-            </h1>
-            <nav class="hidden md:flex space-x-6">
-                <a href="#" class="hover:text-blue-200 transition-colors">Home</a>
-                <a href="#" class="hover:text-blue-200 transition-colors">Admissions</a>
-                <a href="#" class="hover:text-blue-200 transition-colors">Academics</a>
-                <a href="#" class="hover:text-blue-200 transition-colors">Campus Life</a>
+    <!-- GLASS HEADER (sticky) -->
+    <header class="sticky top-0 z-40 glass-header shadow-sm">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+                <div class="bg-blue-700 p-2 rounded-xl text-white shadow-md"><i class="fa-solid fa-cross text-xl"></i></div>
+                <h1 class="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-800 to-indigo-800 bg-clip-text text-transparent">Loyola College</h1>
+                <span class="hidden md:inline text-xs bg-amber-100 text-amber-800 px-3 py-1 rounded-full">Autonomous · est.1925 · 2026</span>
+            </div>
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="#home" class="nav-link text-gray-700 hover:text-blue-700 active" data-nav="home">Home</a>
+                <a href="#admissions" class="nav-link text-gray-700 hover:text-blue-700" data-nav="admissions">Admissions</a>
+                <a href="#academics" class="nav-link text-gray-700 hover:text-blue-700" data-nav="academics">Academics</a>
+                <a href="#campus" class="nav-link text-gray-700 hover:text-blue-700" data-nav="campus">Campus</a>
+                <a href="#heritage" class="nav-link text-gray-700 hover:text-blue-700" data-nav="heritage">Heritage</a>
             </nav>
+            <span class="text-sm bg-blue-50 text-blue-800 px-4 py-2 rounded-full hidden lg:inline"><i class="fa-regular fa-building-columns mr-1"></i> Chennai · 2026</span>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-6 py-12">
-        <div class="max-w-3xl mx-auto text-center mt-12">
-            <h2 class="text-4xl font-extrabold text-gray-900 mb-6 tracking-tight">Welcome to Our University</h2>
-            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-                Discover unparalled opportunities, world-class facilities, and an environment designed to foster innovation and leadership. 
-                Have questions about our programs, admissions process, or campus life? Try our new College Assistant!
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 text-left">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <div class="text-blue-600 text-3xl mb-4"><i class="fa-solid fa-book-open"></i></div>
-                    <h3 class="font-semibold text-xl mb-2">Programs</h3>
-                    <p class="text-gray-600 text-sm">Explore over 50+ undergraduate and postgraduate programs.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <div class="text-blue-600 text-3xl mb-4"><i class="fa-solid fa-users"></i></div>
-                    <h3 class="font-semibold text-xl mb-2">Community</h3>
-                    <p class="text-gray-600 text-sm">Join a vibrant community of passionate learners and educators.</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <div class="text-blue-600 text-3xl mb-4"><i class="fa-solid fa-building-columns"></i></div>
-                    <h3 class="font-semibold text-xl mb-2">Admissions</h3>
-                    <p class="text-gray-600 text-sm">Find everything you need to know about applying for next semester.</p>
-                </div>
+    <!-- Hero section -->
+    <div class="relative bg-gradient-to-r from-blue-900 to-indigo-900 text-white overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-[url('https://www.madrasmusings.com/wp-content/uploads/2024/06/Main-Building-of-Loyola-College.jpg')] bg-cover bg-center"></div>
+        <div class="relative container mx-auto px-6 py-16 md:py-24">
+            <div class="max-w-3xl">
+                <span class="bg-white/20 backdrop-blur-sm px-4 py-1 rounded-full text-sm">#1 arts & science college · 2026</span>
+                <h2 class="text-4xl md:text-6xl font-extrabold mt-6">tradition meets <span class="text-amber-300">tomorrow</span></h2>
+                <p class="text-blue-100 mt-4 text-lg">34 UG, 20 PG, 410 faculty. 92% placements. Since 1925 · centenary year 2025-26</p>
             </div>
         </div>
-    </main>
-
-    <!-- Floating Chatbot Widget Button -->
-    <div class="fixed bottom-6 right-6 z-50">
-        <button id="chatbot-toggle" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg transition-transform hover:scale-105 focus:outline-none">
-            <i class="fa-solid fa-comment-dots text-2xl" id="chatbot-icon"></i>
-        </button>
     </div>
 
-    <!-- Chatbot Window -->
-    <div id="chatbot-window" class="fixed bottom-24 right-6 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden z-50 transition-all duration-300 transform origin-bottom-right scale-0 opacity-0 pointer-events-none">
-        <!-- Header -->
-        <div class="bg-blue-600 text-white p-4 flex justify-between items-center rounded-t-2xl">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                    <i class="fa-solid fa-robot"></i>
+    <!-- MAIN CONTENT (full width, no persistent chat sidebar) -->
+    <div class="container mx-auto px-4 py-10">
+        <main>
+            <!-- HOME SECTION -->
+            <section id="home" class="scroll-mt-24">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-12">
+                    <div class="hover-card bg-white/90 backdrop-blur-sm rounded-2xl p-5 text-center border shadow-sm"><i class="fa-solid fa-user-graduate text-3xl text-blue-600 mb-2"></i><span class="block font-black text-3xl">8.7K+</span><span class="text-sm text-gray-500">Students (2026)</span></div>
+                    <div class="hover-card bg-white/90 backdrop-blur-sm rounded-2xl p-5 text-center border shadow-sm"><i class="fa-solid fa-chalkboard-user text-3xl text-indigo-600 mb-2"></i><span class="block font-black text-3xl">410</span><span class="text-sm text-gray-500">Faculty</span></div>
+                    <div class="hover-card bg-white/90 backdrop-blur-sm rounded-2xl p-5 text-center border shadow-sm"><i class="fa-solid fa-book-open text-3xl text-emerald-600 mb-2"></i><span class="block font-black text-3xl">54+</span><span class="text-sm text-gray-500">Programs</span></div>
+                    <div class="hover-card bg-white/90 backdrop-blur-sm rounded-2xl p-5 text-center border shadow-sm"><i class="fa-solid fa-flask text-3xl text-amber-600 mb-2"></i><span class="block font-black text-3xl">A++</span><span class="text-sm text-gray-500">NAAC (2026)</span></div>
                 </div>
-                <div>
-                    <h3 class="font-semibold text-sm">College Assistant</h3>
-                    <div class="flex items-center gap-1 text-xs text-blue-100">
-                        <span class="w-2 h-2 bg-green-400 rounded-full"></span> Online
+                <div class="hover-card bg-white/90 p-8 rounded-3xl border-l-8 border-amber-400 my-12 shadow-md">
+                    <p class="text-lg italic">"Loyola gave me purpose. The faculty, the library, the campus – every corner inspires excellence." – Dr. Anand, alumnus (IAS 2026 batch)</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6 mt-8">
+                    <div class="hover-card flex gap-4 items-center bg-blue-50 p-5 rounded-2xl border"><i class="fa-solid fa-bullhorn text-3xl text-blue-700"></i><div><span class="font-bold">NIAC 2026</span><p class="text-sm">National level fest · April 10-12, 2026</p></div></div>
+                    <div class="hover-card flex gap-4 items-center bg-indigo-50 p-5 rounded-2xl border"><i class="fa-solid fa-trophy text-3xl text-indigo-700"></i><div><span class="font-bold">Sports laurels</span><p class="text-sm">Overall champions – Intercollegiate 2025-26</p></div></div>
+                </div>
+            </section>
+
+            <!-- ADMISSIONS SECTION -->
+            <section id="admissions" class="scroll-mt-24 mt-16 pt-4">
+                <h3 class="text-3xl font-bold text-blue-900 mb-2"><i class="fa-solid fa-pen-to-square mr-3"></i>Admissions 2026-27</h3>
+                <p class="text-gray-600 mb-6">Online applications open for UG, PG, doctoral programs. Two shifts, merit & entrance.</p>
+                <div class="grid md:grid-cols-2 gap-7">
+                    <div class="hover-card bg-white p-6 rounded-2xl shadow-md border-l-4 border-blue-600">
+                        <h4 class="font-bold text-xl flex items-center gap-2"><i class="fa-regular fa-calendar-check text-blue-600"></i> Important dates 2026</h4>
+                        <ul class="mt-3 space-y-2 text-gray-700">
+                            <li><span class="font-medium">UG start:</span> 15 March 2026</li>
+                            <li><span class="font-medium">PG start:</span> 10 April 2026</li>
+                            <li><span class="font-medium">Last date (UG):</span> 30 May 2026</li>
+                            <li><span class="font-medium">LoVAT (Viscom):</span> 5 June 2026</li>
+                        </ul>
+                    </div>
+                    <div class="hover-card bg-white p-6 rounded-2xl shadow-md border-l-4 border-amber-500">
+                        <h4 class="font-bold text-xl flex items-center gap-2"><i class="fa-solid fa-indian-rupee-sign text-amber-600"></i> Fee range 2026 (entire course)</h4>
+                        <ul class="mt-3 space-y-2 text-gray-700">
+                            <li><span class="font-medium">Shift 1 (Aided):</span> ₹84K – ₹1.35 Lakhs</li>
+                            <li><span class="font-medium">Shift 2 (Self‑financing):</span> ₹1.9L – ₹5.5L</li>
+                            <li><span class="font-medium">PG Arts:</span> ₹45K – ₹1.3L</li>
+                            <li><span class="font-medium">PG Science:</span> ₹85K – ₹2.8L</li>
+                        </ul>
                     </div>
                 </div>
+                <div class="mt-8 grid md:grid-cols-2 gap-6">
+                    <div class="hover-card bg-blue-50 p-6 rounded-2xl border"><h4 class="font-semibold text-lg">📝 Step‑by‑step process 2026</h4><ol class="list-decimal ml-6 mt-2 space-y-1"><li>Register on admissions.loyolacollege.edu (from Jan 2026)</li><li>Fill marks / upload docs</li><li>Pay fee (₹350 general, ₹175 SC/ST)</li><li>Shortlist / entrance call (June 2026)</li><li>Counseling & document verification (July 2026)</li></ol></div>
+                    <div class="hover-card bg-emerald-50 p-6 rounded-2xl border"><h4 class="font-semibold text-lg">🎓 Scholarships 2026</h4><p class="mt-2">LSSS, government aid, merit concessions, sports quota, Jesuit Education Support (JES). New: Centenary Merit Scholarships (₹50,000 each).</p></div>
+                </div>
+            </section>
+
+            <!-- ACADEMICS SECTION -->
+            <section id="academics" class="scroll-mt-24 mt-16 pt-4">
+                <h3 class="text-3xl font-bold text-indigo-900 mb-2"><i class="fa-solid fa-graduation-cap mr-3"></i>Academics at Loyola (2026)</h3>
+                <p class="text-gray-600 mb-6">Autonomous choice‑based credit system. 34 UG, 20 PG, 16 research centres · new AI & Data Science school.</p>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="hover-card bg-white p-5 rounded-xl shadow-sm border-t-4 border-blue-400"><span class="font-bold text-lg">UG programs 2026</span><ul class="text-sm mt-2 list-disc ml-4"><li>B.Com (Gen/CS/Accounting/FinTech)</li><li>B.Sc AI & Data Science (new)</li><li>B.Sc Computer Science, Data Science</li><li>BA Economics, English, History</li><li>BBA, BCA, B.Sc Viscom</li></ul></div>
+                    <div class="hover-card bg-white p-5 rounded-xl shadow-sm border-t-4 border-indigo-400"><span class="font-bold text-lg">PG programs 2026</span><ul class="text-sm mt-2 list-disc ml-4"><li>M.Com, M.A. Economics, English</li><li>M.Sc Physics, Chemistry, Maths</li><li>M.Sc Data Science, Biotech, Psychology</li><li>M.Sc Cybersecurity (new)</li></ul></div>
+                    <div class="hover-card bg-white p-5 rounded-xl shadow-sm border-t-4 border-purple-400"><span class="font-bold text-lg">Doctoral & diplomas</span><ul class="text-sm mt-2 list-disc ml-4"><li>PhD in all major disciplines (2026 fellowships)</li><li>PG Diploma in Counselling, Cyber law</li><li>Certificate in French / German / Korean</li></ul></div>
+                </div>
+                <div class="mt-8 flex flex-wrap gap-4 justify-around bg-indigo-50 p-6 rounded-3xl hover-card"><div><span class="font-semibold">📚 affiliated to</span> University of Madras</div><div><span class="font-semibold">⭐ NAAC grade</span> A++ (re-accredited 2026)</div><div><span class="font-semibold">🏆 NIRF rank</span> #5 among colleges (2026)</div></div>
+            </section>
+
+            <!-- CAMPUS SECTION -->
+            <section id="campus" class="scroll-mt-24 mt-16 pt-4">
+                <h3 class="text-3xl font-bold text-emerald-800 mb-2"><i class="fa-solid fa-tree mr-3"></i>Life on campus · 2026</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div class="hover-card bg-white/90 p-5 rounded-xl flex gap-3 border"><i class="fa-solid fa-book-open-cover text-2xl text-amber-700"></i><div><span class="font-bold">Central Library</span><p class="text-sm">1.5L+ books, e‑journals, 24/7 reading</p></div></div>
+                    <div class="hover-card bg-white/90 p-5 rounded-xl flex gap-3 border"><i class="fa-solid fa-futbol text-2xl text-green-600"></i><div><span class="font-bold">Sports complex</span><p class="text-sm">Floodlit cricket ground, Olympic gym</p></div></div>
+                    <div class="hover-card bg-white/90 p-5 rounded-xl flex gap-3 border"><i class="fa-solid fa-utensils text-2xl text-orange-600"></i><div><span class="font-bold">Canteens & food</span><p class="text-sm">6 canteens, multi-cuisine</p></div></div>
+                    <div class="hover-card bg-white/90 p-5 rounded-xl flex gap-3 border"><i class="fa-solid fa-wifi text-2xl text-blue-600"></i><div><span class="font-bold">Wi‑Fi 6 & IT</span><p class="text-sm">100% campus covered, AI labs</p></div></div>
+                    <div class="hover-card bg-white/90 p-5 rounded-xl flex gap-3 border"><i class="fa-solid fa-bus-simple text-2xl text-gray-600"></i><div><span class="font-bold">Transport hub</span><p class="text-sm">5 min from Nungambakkam railway stn</p></div></div>
+                    <div class="hover-card bg-white/90 p-5 rounded-xl flex gap-3 border"><i class="fa-solid fa-hand-holding-heart text-2xl text-red-600"></i><div><span class="font-bold">Health centre</span><p class="text-sm">Resident doctor, telemedicine</p></div></div>
+                </div>
+            </section>
+
+            <!-- HERITAGE SECTION -->
+            <section id="heritage" class="scroll-mt-24 mt-16 pt-4">
+                <h3 class="text-3xl font-bold text-amber-900 mb-2"><i class="fa-solid fa-church mr-3"></i>Jesuit heritage · est. 1925 · Centenary 2026</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="hover-card bg-white p-7 rounded-3xl shadow-md border"><p class="text-gray-700">Founded by the Society of Jesus (Jesuits) in 1925, Loyola College has shaped generations with a motto “Lucet et Ardet” (Light and Warmth). 2025-26 marks the centenary year. Notable alumni: Nobel laureate Sir C.V. Raman, actors Vijay, Suriya, Vikram, director Mani Ratnam, cricketer R. Ashwin.</p></div>
+                    <div class="hover-card bg-blue-100 p-7 rounded-3xl text-center border"><i class="fa-solid fa-quote-right text-5xl text-blue-800 opacity-20 mb-3"></i><p class="italic">"Loyola is not just a college; it's a way of life that prepares you for the world."</p><p class="font-bold mt-4">— Dr. K. Rosaiah, former Governor</p><p class="text-sm mt-3 bg-yellow-200/70 p-2 rounded-full">Centenary celebrations: March – Dec 2026</p></div>
+                </div>
+            </section>
+            <div class="h-8"></div>
+        </main>
+    </div>
+
+    <!-- FLOATING CHAT BUTTON + COLLAPSIBLE CHAT WINDOW (initially closed) -->
+    <div class="chat-fab" id="chatFabBtn">
+        <i class="fa-regular fa-message text-white text-2xl"></i>
+    </div>
+
+    <div class="chat-window" id="chatWindow">
+        <div class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white p-4 rounded-t-2xl flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-white/20 rounded-2xl flex items-center justify-center"><i class="fa-regular fa-robot text-xl"></i></div>
+                <div><h3 class="font-semibold">Loyola Guide 2026</h3><div class="flex items-center gap-1 text-xs"><span class="w-2 h-2 bg-green-400 rounded-full"></span> ready to help</div></div>
             </div>
-            <button id="chatbot-close" class="text-blue-100 hover:text-white transition-colors focus:outline-none">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
+            <button id="closeChatBtn" class="text-white/80 hover:text-white text-xl">&times;</button>
         </div>
-
-        <!-- Messages Area -->
-        <div id="chat-messages" class="flex-grow h-80 p-4 overflow-y-auto chat-scroll flex flex-col gap-3 bg-gray-50">
-            <!-- Initial Bot Message -->
-            <!-- Messages will be injected here via JS -->
+        <!-- chat messages area -->
+        <div id="chat-messages" class="flex-grow overflow-y-auto p-4 space-y-3 chat-scroll bg-gray-50/80" style="max-height: 360px;"></div>
+        <!-- quick chips -->
+        <div class="px-3 pt-2 pb-1 flex flex-wrap gap-2 border-t border-gray-200 bg-white/80">
+            <div class="predefined-chip" data-question="When was Loyola founded?"><i class="fa-regular fa-calendar"></i> founded</div>
+            <div class="predefined-chip" data-question="What are the fees for B.Com 2026?"><i class="fa-solid fa-indian-rupee-sign"></i> fees 2026</div>
+            <div class="predefined-chip" data-question="Which courses are offered in 2026?"><i class="fa-solid fa-graduation-cap"></i> courses 2026</div>
+            <div class="predefined-chip" data-question="How are placements at Loyola 2026?"><i class="fa-solid fa-briefcase"></i> placement 2026</div>
+            <div class="predefined-chip" data-question="Where is Loyola located?"><i class="fa-solid fa-location-dot"></i> location</div>
         </div>
-
-        <!-- Input Area -->
-        <div class="p-3 bg-white border-t border-gray-100">
+        <!-- input area -->
+        <div class="p-3 bg-white border-t border-gray-200 rounded-b-2xl">
             <form id="chat-form" class="flex gap-2">
-                <input type="text" id="chat-input" placeholder="Type your question..." class="flex-grow border border-gray-200 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" autocomplete="off" required>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors focus:outline-none disabled:bg-blue-300 disabled:cursor-not-allowed">
-                    <i class="fa-solid fa-paper-plane text-sm"></i>
-                </button>
+                <input type="text" id="chat-input" placeholder="Ask about admissions, fees..." class="flex-grow border border-gray-200 bg-gray-50 rounded-full px-4 py-2 text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none">
+                <button type="submit" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full w-9 h-9 flex items-center justify-center shadow-md"><i class="fa-solid fa-paper-plane text-sm"></i></button>
             </form>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        (function() {
+            // ----- SMOOTH SCROLL + ACTIVE NAVIGATION (anchor-based) -----
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = ['home', 'admissions', 'academics', 'campus', 'heritage'];
+            function updateActiveNav() {
+                let current = 'home';
+                const scrollPos = window.scrollY + 100;
+                for (let id of sections) {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        const offsetTop = el.offsetTop;
+                        const offsetBottom = offsetTop + el.offsetHeight;
+                        if (scrollPos >= offsetTop && scrollPos < offsetBottom) {
+                            current = id;
+                            break;
+                        }
+                    }
+                }
+                navLinks.forEach(link => {
+                    const target = link.getAttribute('data-nav');
+                    if (target === current) link.classList.add('active');
+                    else link.classList.remove('active');
+                });
+            }
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-nav');
+                    const targetEl = document.getElementById(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        history.pushState(null, null, `#${targetId}`);
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                    }
+                });
+            });
+            window.addEventListener('scroll', updateActiveNav);
+            window.addEventListener('load', () => {
+                updateActiveNav();
+                if (window.location.hash) {
+                    const id = window.location.hash.substring(1);
+                    const el = document.getElementById(id);
+                    if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+                }
+            });
+
+            // ---------- CHATBOT (initially closed, opens on click) ----------
+            const chatFab = document.getElementById('chatFabBtn');
+            const chatWindow = document.getElementById('chatWindow');
+            const closeChatBtn = document.getElementById('closeChatBtn');
+            const chatMessagesDiv = document.getElementById('chat-messages');
+            const chatForm = document.getElementById('chat-form');
+            const chatInput = document.getElementById('chat-input');
+            
+            let chatInitialized = false;  // to add greeting only once when opened
+            
+            function openChat() {
+                chatWindow.classList.add('open');
+                if (!chatInitialized) {
+                    // first time opening: add greeting message
+                    addBotMessage("👋 Namaste! I'm your Loyola 2026 guide. Ask me anything about admissions, fees, courses, centenary events, placements, or click the suggestion chips above.");
+                    chatInitialized = true;
+                }
+            }
+            function closeChat() {
+                chatWindow.classList.remove('open');
+            }
+            chatFab.addEventListener('click', openChat);
+            closeChatBtn.addEventListener('click', closeChat);
+            
+            // Enhanced knowledge base (2026 focused)
+            const knowledgeBase = [
+                { keywords: ["loyola college","name","college name","about college","general","tell me about loyola"], answer: "Loyola College, est. 1925 (Jesuit), Chennai. NAAC A++, NIRF #5, 8700+ students, 410 faculty, 54+ programs. Centenary year 2025-26." },
+                { keywords: ["founded","established","history","old","when start","year"], answer: "Loyola College was founded in 1925 by the Society of Jesus (Jesuits). Celebrating its centenary 2025-26." },
+                { keywords: ["location","where","address","city","situated"], answer: "Sterling Road, Nungambakkam, Chennai - 600034. Near Nungambakkam railway station (5 min walk)." },
+                { keywords: ["admission","apply","application","join","process","how to"], answer: "Admissions 2026-27: online portal opens Jan 2026. Merit-based (12th marks) for UG, entrance for select PG. Last date UG: 30 May 2026. Apply at admissions.loyolacollege.edu" },
+                { keywords: ["fee","fees","cost","tuition","how much"], answer: "2026-27 fees: Shift1 (Aided) UG: ₹84K-1.35L; Shift2 self-financing UG: ₹1.9L-5.5L; PG Arts: ₹45K-1.3L; PG Science: ₹85K-2.8L. Scholarships available." },
+                { keywords: ["courses","programs","majors","degrees","ug","pg","offerings"], answer: "34 UG, 20 PG for 2026. New: B.Sc AI & Data Science, M.Sc Cybersecurity. Popular: B.Com, BBA, B.Sc CS, BA Economics, M.Sc Data Science, M.Com." },
+                { keywords: ["placement","jobs","recruiters","salary","career"], answer: "Placement 2026: 92% placed. Top recruiters: Deloitte, EY, TCS, Zoho, Google. Highest package ₹18 LPA, average ₹5.2 LPA." },
+                { keywords: ["scholarship","scholarships","financial aid","jesuit"], answer: "LSSS, government scholarships, Centenary Merit Scholarships (₹50,000), sports quota, Jesuit Education Support. Apply by May 2026." },
+                { keywords: ["ranking","nirf","naac","accreditation"], answer: "NAAC A++ (re-accredited 2026), NIRF #5 among colleges in India 2026." },
+                { keywords: ["hostel","accommodation","stay","room"], answer: "Separate hostels for boys & girls, capacity 800+, well-furnished, mess, recreation. Apply by June 2026." },
+                { keywords: ["events","fest","cultural","eminence"], answer: "NIAC 2026 (Apr 10-12), Eminence 2026 (Aug), Zenith, Innodhya. Centenary celebrations throughout 2026." },
+                { keywords: ["sports","cricket","gym","athletics"], answer: "Floodlit cricket ground, synthetic courts, modern gym. Overall intervarsity champions 2026." },
+                { keywords: ["b.com","bcom","commerce"], answer: "B.Com programs: General, CS, Accounting & Finance, FinTech (new). High cutoff, excellent placement." },
+                { keywords: ["data science","ai","machine learning"], answer: "New B.Sc AI & Data Science (2026) and M.Sc Data Science with industry collaborations." },
+                { keywords: ["alumni","famous","vijay","suriya","raman"], answer: "Notable alumni: C.V. Raman (Nobel), actors Vijay, Suriya, Vikram, Mani Ratnam, R. Ashwin." },
+                { keywords: ["library","books","reading"], answer: "Central Library: 1.5 lakh books, digital archive, 24/7 reading hall." }
+            ];
+            
+            function findAnswer(question) {
+                const q = question.toLowerCase();
+                for (let item of knowledgeBase) {
+                    for (let kw of item.keywords) {
+                        if (q.includes(kw.toLowerCase())) return item.answer;
+                    }
+                }
+                return "I'm your Loyola 2026 assistant. For specific queries, please visit the official website or contact admissions office. You can ask about fees, courses, placements, centenary events, etc.";
+            }
+            
+            function escapeHtml(str) {
+                return str.replace(/[&<>]/g, function(m) {
+                    if (m === '&') return '&amp;';
+                    if (m === '<') return '&lt;';
+                    if (m === '>') return '&gt;';
+                    return m;
+                });
+            }
+            
+            function addUserMessage(text) {
+                const div = document.createElement('div');
+                div.className = 'flex justify-end';
+                div.innerHTML = `<div class="message-bubble-user">${escapeHtml(text)}</div>`;
+                chatMessagesDiv.appendChild(div);
+                chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+            }
+            
+            function addBotMessage(text) {
+                const div = document.createElement('div');
+                div.className = 'flex justify-start';
+                div.innerHTML = `<div class="message-bubble-bot">${escapeHtml(text)}</div>`;
+                chatMessagesDiv.appendChild(div);
+                chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+            }
+            
+            function showTyping() {
+                const typingDiv = document.createElement('div');
+                typingDiv.id = 'typing-indicator';
+                typingDiv.className = 'flex justify-start';
+                typingDiv.innerHTML = `<div class="bg-gray-200/80 rounded-2xl rounded-tl-none px-4 py-2 flex gap-1 typing-dots"><span></span><span></span><span></span></div>`;
+                chatMessagesDiv.appendChild(typingDiv);
+                chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+            }
+            
+            function removeTyping() {
+                const el = document.getElementById('typing-indicator');
+                if (el) el.remove();
+            }
+            
+            function handleUserMessage(msg) {
+                if (!msg.trim()) return;
+                addUserMessage(msg);
+                chatInput.value = '';
+                const submitBtn = chatForm.querySelector('button[type="submit"]');
+                if (submitBtn) submitBtn.disabled = true;
+                showTyping();
+                setTimeout(() => {
+                    removeTyping();
+                    const reply = findAnswer(msg);
+                    addBotMessage(reply);
+                    if (submitBtn) submitBtn.disabled = false;
+                    chatInput.focus();
+                }, 500);
+            }
+            
+            chatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const message = chatInput.value.trim();
+                if (message) handleUserMessage(message);
+            });
+            
+            document.querySelectorAll('.predefined-chip').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    const question = chip.getAttribute('data-question');
+                    if (question) handleUserMessage(question);
+                });
+            });
+            
+            // ensure chat window is hidden initially (class open not present)
+            chatWindow.classList.remove('open');
+        })();
+    </script>
 </body>
 </html>
